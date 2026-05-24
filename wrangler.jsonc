@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "saas-bpilerplate",
+	"name": "saas-boilerplate",
 	"main": ".open-next/worker.js",
 	"compatibility_date": "2026-05-24",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
@@ -14,7 +14,7 @@
 	"services": [
 		{
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "saas-bpilerplate"
+			"service": "saas-boilerplate"
 		}
 	],
 	"observability": {
