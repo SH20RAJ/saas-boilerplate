@@ -66,3 +66,14 @@ export const plans: Plan[] = [
 export function getPlanByKey(key: string) {
 	return plans.find((plan) => plan.key === key);
 }
+
+export function getPlanProductId(plan: Plan, source: Record<string, string | undefined> = process.env) {
+	return plan.productEnvKey ? source[plan.productEnvKey] : undefined;
+}
+
+export function getPlanKeyByProductId(
+	productId: string,
+	source: Record<string, string | undefined> = process.env,
+) {
+	return plans.find((plan) => getPlanProductId(plan, source) === productId)?.key ?? "free";
+}

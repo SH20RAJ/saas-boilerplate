@@ -85,6 +85,20 @@ export function getServerEnv(source: EnvSource = process.env) {
 	return env;
 }
 
+export function getDodoPaymentsEnv(source: EnvSource = process.env) {
+	const issues: string[] = [];
+	const dodoEnvironment = readRequired(source, "DODO_PAYMENTS_ENVIRONMENT", issues);
+	const env = {
+		DODO_PAYMENTS_API_KEY: readRequired(source, "DODO_PAYMENTS_API_KEY", issues),
+		DODO_PAYMENTS_WEBHOOK_KEY: readRequired(source, "DODO_PAYMENTS_WEBHOOK_KEY", issues),
+		DODO_PAYMENTS_RETURN_URL: readRequired(source, "DODO_PAYMENTS_RETURN_URL", issues),
+		DODO_PAYMENTS_ENVIRONMENT: parseDodoEnvironment(dodoEnvironment, issues),
+	};
+
+	throwIfInvalid(issues);
+	return env;
+}
+
 export function getDodoProductIds(source: EnvSource = process.env) {
 	return {
 		proMonthly: source.DODO_PRODUCT_ID_PRO_MONTHLY,
