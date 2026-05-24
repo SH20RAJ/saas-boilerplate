@@ -1,47 +1,100 @@
-# OpenNext Starter
+# SaaS Boilerplate
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+[![CI](https://img.shields.io/github/actions/workflow/status/SH20RAJ/saas-boilerplate/ci.yml?branch=main&label=ci)](https://github.com/SH20RAJ/saas-boilerplate/actions)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Bun](https://img.shields.io/badge/package%20manager-Bun-black)](https://bun.sh)
+[![Next.js](https://img.shields.io/badge/framework-Next.js-black)](https://nextjs.org)
+[![Cloudflare Workers](https://img.shields.io/badge/deploy-Cloudflare%20Workers-f38020)](https://developers.cloudflare.com/workers/)
+[![Stack Auth](https://img.shields.io/badge/auth-Stack%20Auth-111827)](https://stack-auth.com)
+[![Dodo Payments](https://img.shields.io/badge/payments-Dodo%20Payments-2563eb)](https://dodopayments.com)
 
-## Getting Started
+A production-minded, open-source SaaS starter for founders and contributors who want a Cloudflare Workers
+deployment target without giving up the usual SaaS primitives.
 
-Read the documentation at https://opennext.js.org/cloudflare.
+## Features
 
-## Develop
+- Next.js App Router and TypeScript
+- Bun package manager
+- Cloudflare Workers deployment through OpenNext
+- Stack Auth authentication
+- Dodo Payments checkout, portal, and verified webhooks
+- Drizzle ORM with Cloudflare D1 by default
+- Tailwind CSS and shadcn/ui-style primitives
+- Biome formatting and linting
+- Vitest and Playwright test hooks
+- Contributor docs and GitHub templates
 
-Run the Next.js development server:
-
-```bash
-npm run dev
-# or similar package manager command
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## Preview
-
-Preview the application locally on the Cloudflare runtime:
-
-```bash
-npm run preview
-# or similar package manager command
-```
-
-## Deploy
-
-Deploy the application to Cloudflare:
+## Quick Start
 
 ```bash
-npm run deploy
-# or similar package manager command
+git clone https://github.com/SH20RAJ/saas-boilerplate.git
+cd saas-boilerplate
+bun install
+cp .env.example .env.local
+cp .dev.vars.example .dev.vars
+bun run dev
 ```
 
-## Learn More
+Open http://localhost:3000.
 
-To learn more about Next.js, take a look at the following resources:
+## Required Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+NEXT_PUBLIC_APP_URL=
+NEXT_PUBLIC_STACK_PROJECT_ID=
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=
+STACK_SECRET_SERVER_KEY=
+DODO_PAYMENTS_API_KEY=
+DODO_PAYMENTS_WEBHOOK_KEY=
+DODO_PAYMENTS_RETURN_URL=
+DODO_PAYMENTS_ENVIRONMENT=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See [environment variables](docs/environment-variables.md) for local and production setup.
+
+## Scripts
+
+| Command | Purpose |
+| --- | --- |
+| `bun run dev` | Start Next.js local dev |
+| `bun run build` | Build the Next.js app |
+| `bun run preview` | Build and preview on the Cloudflare runtime |
+| `bun run deploy` | Build and deploy to Cloudflare Workers |
+| `bun run upload` | Build and upload a Worker version |
+| `bun run cf-typegen` | Regenerate Cloudflare binding types |
+| `bun run db:generate` | Generate Drizzle migrations |
+| `bun run db:migrate:local` | Apply D1 migrations locally |
+| `bun run db:migrate:remote` | Apply D1 migrations remotely |
+| `bun run format` | Format with Biome |
+| `bun run lint` | Check formatting and lint rules with Biome |
+| `bun run typecheck` | Run TypeScript |
+| `bun run test` | Run Vitest |
+| `bun run test:e2e` | Run Playwright |
+| `bun run validate` | Run format, lint, typecheck, and unit tests |
+
+## Project Structure
+
+```txt
+src/app             App Router routes and route handlers
+src/components      UI and domain components
+src/config          Site, app, and plan configuration
+src/db              Drizzle schema and D1 client
+src/lib             Auth, billing, Dodo, env, and shared helpers
+docs                Setup, architecture, deployment, and contributor docs
+drizzle             Generated SQL migrations
+```
+
+## Setup Guides
+
+- [Getting started](docs/getting-started.md)
+- [Cloudflare](docs/cloudflare.md)
+- [Authentication](docs/authentication.md)
+- [Payments](docs/payments.md)
+- [Database](docs/database.md)
+- [Deployment](docs/deployment.md)
+- [Architecture](docs/architecture.md)
+- [Contributing](docs/contributing.md)
+
+## License
+
+MIT. See [LICENSE](LICENSE).

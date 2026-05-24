@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation
+    url: https://github.com/SH20RAJ/saas-boilerplate/tree/main/docs
+    about: Read setup and deployment guides before opening support issues.
