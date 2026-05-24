@@ -1,0 +1,13 @@
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+NEXT_PUBLIC_STACK_PROJECT_ID="stack_project_id"
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY="stack_publishable_client_key"
+STACK_SECRET_SERVER_KEY="stack_secret_server_key"
+
+DODO_PAYMENTS_API_KEY="dodo_api_key"
+DODO_PAYMENTS_WEBHOOK_KEY="dodo_webhook_key"
+DODO_PAYMENTS_RETURN_URL="http://localhost:3000/dashboard/billing"
+DODO_PAYMENTS_ENVIRONMENT="test_mode"
+
+DODO_PRODUCT_ID_PRO_MONTHLY="pdt_pro_monthly"
+DODO_PRODUCT_ID_PRO_YEARLY="pdt_pro_yearly"
+DODO_PRODUCT_ID_LIFETIME="pdt_lifetime"
