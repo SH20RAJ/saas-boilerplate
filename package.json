@@ -41,12 +41,17 @@
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run --passWithNoTests",
 		"test:e2e": "playwright test",
-		"validate": "bun run format && bun run lint && bun run typecheck && bun run test"
+		"validate": "bun run format && bun run lint && bun run typecheck && bun run test",
+		"db:generate": "drizzle-kit generate --config=drizzle.config.ts",
+		"db:migrate:local": "wrangler d1 migrations apply DB --local",
+		"db:migrate:remote": "wrangler d1 migrations apply DB --remote",
+		"db:studio": "drizzle-kit studio --config=drizzle.config.ts"
 	},
 	"dependencies": {
 		"@opennextjs/cloudflare": "^1.19.9",
 		"@stackframe/stack": "^2.8.102",
 		"clsx": "^2.1.1",
+		"drizzle-orm": "^0.45.2",
 		"next": "16.2.6",
 		"react": "^19.1.7",
 		"react-dom": "^19.1.7",
@@ -60,6 +65,7 @@
 		"@types/node": "^25.9.1",
 		"@types/react": "^19.1.7",
 		"@types/react-dom": "^19.1.7",
+		"drizzle-kit": "^0.31.10",
 		"eslint": "^9",
 		"eslint-config-next": "16.2.6",
 		"tailwindcss": "^4",

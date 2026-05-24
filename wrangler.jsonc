@@ -17,6 +17,14 @@
 			"service": "saas-boilerplate"
 		}
 	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "saas-boilerplate-db",
+			"database_id": "00000000-0000-0000-0000-000000000000",
+			"migrations_dir": "drizzle"
+		}
+	],
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1
