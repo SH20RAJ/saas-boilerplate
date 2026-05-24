@@ -1,5 +1,7 @@
+import { Code2 } from "lucide-react";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import { appConfig } from "@/config/app";
 import { siteConfig } from "@/config/site";
 
@@ -23,12 +25,16 @@ export function SiteHeader() {
 						</Link>
 					))}
 				</nav>
-				<Link
-					className="hidden rounded-md bg-foreground px-3 py-2 font-medium text-background text-sm transition hover:opacity-90 sm:inline-flex"
-					href={appConfig.signInPath}
-				>
-					Sign in
-				</Link>
+				<div className="hidden items-center gap-2 sm:flex">
+					<Button asChild size="icon" variant="ghost">
+						<a aria-label="GitHub repository" href={siteConfig.links.github} rel="noreferrer" target="_blank">
+							<Code2 className="size-4" />
+						</a>
+					</Button>
+					<Button asChild size="sm">
+						<Link href={appConfig.signInPath}>Sign in</Link>
+					</Button>
+				</div>
 			</div>
 		</header>
 	);

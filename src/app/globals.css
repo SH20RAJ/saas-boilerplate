@@ -8,6 +8,7 @@
 	--muted: #f4f5f6;
 	--muted-foreground: #5d6572;
 	--border: #d9dde3;
+	--ring: #6f7a86;
 }
 
 @theme inline {
@@ -18,6 +19,7 @@
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
 	--color-border: var(--border);
+	--color-ring: var(--ring);
 	--font-sans: var(--font-geist-sans);
 	--font-mono: var(--font-geist-mono);
 }
@@ -31,6 +33,7 @@
 		--muted: #1a1d21;
 		--muted-foreground: #a0a8b3;
 		--border: #282d34;
+		--ring: #8a96a3;
 	}
 }
 

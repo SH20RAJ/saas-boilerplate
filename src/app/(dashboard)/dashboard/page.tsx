@@ -1,59 +1,92 @@
-import { UserButton } from "@stackframe/stack";
+import { Activity, ArrowUpRight, CreditCard, UserRound } from "lucide-react";
 import Link from "next/link";
 
-import { PageShell } from "@/components/shared/page-shell";
+import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireUser } from "@/lib/stack/require-user";
+
+const quickActions = [
+	{ href: "/pricing", label: "Upgrade plan", icon: ArrowUpRight },
+	{ href: "/dashboard/billing", label: "Manage billing", icon: CreditCard },
+	{ href: "/dashboard/settings", label: "Account settings", icon: UserRound },
+];
 
 export default async function DashboardPage() {
 	const user = await requireUser();
 	const displayName = user.displayName ?? user.primaryEmail ?? "SaaS builder";
 
 	return (
-		<PageShell>
-			<main className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+		<DashboardShell>
+			<main className="grid gap-6">
 				<div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
 					<div>
-						<p className="font-medium text-muted-foreground text-sm uppercase tracking-[0.18em]">Dashboard</p>
-						<h1 className="mt-2 font-semibold text-3xl tracking-tight">Welcome, {displayName}</h1>
+						<Badge variant="outline">Dashboard</Badge>
+						<h1 className="mt-3 font-semibold text-3xl tracking-tight">Welcome, {displayName}</h1>
+						<p className="mt-2 text-muted-foreground">
+							Your app shell is ready for product-specific workflows.
+						</p>
 					</div>
-					<div className="flex items-center gap-3">
-						<Link className="rounded-md border border-border px-4 py-2 text-sm" href="/dashboard/billing">
-							Billing
+					<Button asChild>
+						<Link href="/pricing">
+							View plans
+							<ArrowUpRight className="size-4" />
 						</Link>
-						<Link className="rounded-md border border-border px-4 py-2 text-sm" href="/dashboard/settings">
-							Settings
-						</Link>
-						<UserButton />
-					</div>
+					</Button>
 				</div>
-				<section className="mt-8 rounded-lg border border-border bg-card p-5 text-card-foreground">
-					<h2 className="font-medium">Signed-in user</h2>
-					<dl className="mt-4 grid gap-3 text-sm sm:grid-cols-3">
-						<div>
-							<dt className="text-muted-foreground">ID</dt>
-							<dd className="mt-1 break-all">{user.id}</dd>
-						</div>
-						<div>
-							<dt className="text-muted-foreground">Email</dt>
-							<dd className="mt-1">{user.primaryEmail ?? "No email"}</dd>
-						</div>
-						<div>
-							<dt className="text-muted-foreground">Name</dt>
-							<dd className="mt-1">{user.displayName ?? "No display name"}</dd>
-						</div>
-					</dl>
-				</section>
-				<div className="mt-8 grid gap-4 md:grid-cols-3">
-					{["Subscription", "Usage", "Next steps"].map((label) => (
-						<section className="rounded-lg border border-border bg-card p-5 text-card-foreground" key={label}>
-							<h2 className="font-medium">{label}</h2>
-							<p className="mt-2 text-muted-foreground text-sm">
-								This panel is ready for auth, billing, and product-specific data.
-							</p>
-						</section>
-					))}
+				<div className="grid gap-4 md:grid-cols-3">
+					<Card>
+						<CardHeader>
+							<CardTitle className="text-lg">Subscription</CardTitle>
+							<CardDescription>Webhook-backed billing status</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<p className="font-semibold text-2xl">Free</p>
+							<p className="mt-2 text-muted-foreground text-sm">Upgrade to unlock paid-plan behavior.</p>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardHeader>
+							<CardTitle className="text-lg">Identity</CardTitle>
+							<CardDescription>Stack Auth user</CardDescription>
+						</CardHeader>
+						<CardContent className="grid gap-2 text-sm">
+							<p className="break-all">{user.id}</p>
+							<p className="text-muted-foreground">{user.primaryEmail ?? "No primary email"}</p>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardHeader>
+							<CardTitle className="text-lg">Activity</CardTitle>
+							<CardDescription>Ready for app events</CardDescription>
+						</CardHeader>
+						<CardContent className="flex items-center gap-3">
+							<Activity className="size-5 text-emerald-600" />
+							<span className="text-sm">No product events yet</span>
+						</CardContent>
+					</Card>
 				</div>
+				<Card>
+					<CardHeader>
+						<CardTitle>Quick actions</CardTitle>
+						<CardDescription>Common links for the starter app.</CardDescription>
+					</CardHeader>
+					<CardContent className="grid gap-3 sm:grid-cols-3">
+						{quickActions.map((action) => {
+							const Icon = action.icon;
+							return (
+								<Button asChild className="justify-start" key={action.href} variant="outline">
+									<Link href={action.href}>
+										<Icon className="size-4" />
+										{action.label}
+									</Link>
+								</Button>
+							);
+						})}
+					</CardContent>
+				</Card>
 			</main>
-		</PageShell>
+		</DashboardShell>
 	);
 }
