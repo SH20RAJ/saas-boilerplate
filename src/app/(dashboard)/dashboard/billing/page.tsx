@@ -1,7 +1,10 @@
 import { PageShell } from "@/components/shared/page-shell";
 import { plans } from "@/config/plans";
+import { requireUser } from "@/lib/stack/require-user";
 
-export default function BillingPage() {
+export default async function BillingPage() {
+	await requireUser();
+
 	return (
 		<PageShell>
 			<main className="mx-auto max-w-4xl px-4 py-12 sm:px-6">

@@ -1,13 +1,5 @@
-import { redirect } from "next/navigation";
-
-import { appConfig } from "@/config/app";
+import { stackServerApp } from "./server";
 
 export async function requireUser() {
-	const user = await import("./server").then((module) => module.getCurrentUser());
-
-	if (!user) {
-		redirect(appConfig.signInPath);
-	}
-
-	return user;
+	return stackServerApp.getUser({ or: "redirect" });
 }
