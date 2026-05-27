@@ -15,13 +15,20 @@ export function CustomerPortalButton() {
 
 		try {
 			const response = await fetch("/api/customer-portal");
+			const payload = (await response.json().catch(() => null)) as {
+				error?: string;
+				portalUrl?: string;
+			} | null;
 
 			if (!response.ok) {
-				const payload = (await response.json().catch(() => null)) as { error?: string } | null;
 				throw new Error(payload?.error ?? "Unable to open customer portal.");
 			}
 
-			window.location.assign(response.url);
+			if (!payload?.portalUrl) {
+				throw new Error("Unable to open customer portal.");
+			}
+
+			window.location.assign(payload.portalUrl);
 		} catch (portalError) {
 			setError(portalError instanceof Error ? portalError.message : "Unable to open customer portal.");
 		} finally {

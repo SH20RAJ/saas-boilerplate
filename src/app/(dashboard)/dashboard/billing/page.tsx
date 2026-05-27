@@ -8,10 +8,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { plans } from "@/config/plans";
+import { getUserPlan, getUserSubscription } from "@/lib/billing/entitlement";
+import { upsertUserFromStack } from "@/lib/billing/users";
 import { requireUser } from "@/lib/stack/require-user";
 
 export default async function BillingPage() {
-	await requireUser();
+	const user = await requireUser();
+	const appUser = await upsertUserFromStack(user);
+	const [currentPlan, subscription] = await Promise.all([
+		getUserPlan(appUser.id),
+		getUserSubscription(appUser.id),
+	]);
 	const paidPlans = plans.filter((plan) => plan.key !== "free");
 
 	return (
@@ -30,13 +37,19 @@ export default async function BillingPage() {
 							<CreditCard className="size-5" />
 							Current plan
 						</CardTitle>
-						<CardDescription>This starter defaults every new account to the free plan.</CardDescription>
+						<CardDescription>Plan access is read from webhook-backed database state.</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 							<div>
-								<p className="font-semibold text-2xl">Free</p>
-								<p className="text-muted-foreground text-sm">Upgrade after configuring Dodo product IDs.</p>
+								<p className="font-semibold text-2xl">{currentPlan?.name ?? "Free"}</p>
+								<p className="text-muted-foreground text-sm">
+									{subscription?.currentPeriodEnd
+										? `Renews or ends on ${new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(
+												new Date(subscription.currentPeriodEnd),
+											)}`
+										: "Upgrade after configuring Dodo product IDs."}
+								</p>
 							</div>
 							<CustomerPortalButton />
 						</div>

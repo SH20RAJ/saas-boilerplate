@@ -70,7 +70,13 @@ export function getServerEnv(source: EnvSource = process.env) {
 	const issues: string[] = [];
 	const dodoEnvironment = readRequired(source, "DODO_PAYMENTS_ENVIRONMENT", issues);
 	const env = {
-		...getPublicEnv(source),
+		NEXT_PUBLIC_APP_URL: readRequired(source, "NEXT_PUBLIC_APP_URL", issues),
+		NEXT_PUBLIC_STACK_PROJECT_ID: readRequired(source, "NEXT_PUBLIC_STACK_PROJECT_ID", issues),
+		NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY: readRequired(
+			source,
+			"NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY",
+			issues,
+		),
 		STACK_SECRET_SERVER_KEY: readRequired(source, "STACK_SECRET_SERVER_KEY", issues),
 		DODO_PAYMENTS_API_KEY: readRequired(source, "DODO_PAYMENTS_API_KEY", issues),
 		DODO_PAYMENTS_WEBHOOK_KEY: readRequired(source, "DODO_PAYMENTS_WEBHOOK_KEY", issues),

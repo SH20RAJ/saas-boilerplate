@@ -5,6 +5,8 @@ import { DashboardShell } from "@/components/dashboard/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserPlan, getUserSubscription } from "@/lib/billing/entitlement";
+import { upsertUserFromStack } from "@/lib/billing/users";
 import { requireUser } from "@/lib/stack/require-user";
 
 const quickActions = [
@@ -15,6 +17,8 @@ const quickActions = [
 
 export default async function DashboardPage() {
 	const user = await requireUser();
+	const appUser = await upsertUserFromStack(user);
+	const [plan, subscription] = await Promise.all([getUserPlan(appUser.id), getUserSubscription(appUser.id)]);
 	const displayName = user.displayName ?? user.primaryEmail ?? "SaaS builder";
 
 	return (
@@ -42,8 +46,12 @@ export default async function DashboardPage() {
 							<CardDescription>Webhook-backed billing status</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<p className="font-semibold text-2xl">Free</p>
-							<p className="mt-2 text-muted-foreground text-sm">Upgrade to unlock paid-plan behavior.</p>
+							<p className="font-semibold text-2xl">{plan?.name ?? "Free"}</p>
+							<p className="mt-2 text-muted-foreground text-sm">
+								{subscription?.status
+									? `Status: ${subscription.status}`
+									: "Upgrade to unlock paid-plan behavior."}
+							</p>
 						</CardContent>
 					</Card>
 					<Card>

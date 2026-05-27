@@ -3,8 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { getPlanByKey } from "@/config/plans";
 import { getDbAsync } from "@/db/client";
 import { subscriptions } from "@/db/schema";
-
-const activeSubscriptionStatuses = new Set(["active", "renewed"]);
+import { isSubscriptionCurrentlyActive } from "./subscription-status";
 
 export async function getUserSubscription(userId: string) {
 	const db = await getDbAsync();
@@ -25,13 +24,13 @@ export async function hasActiveSubscription(userId: string) {
 		return false;
 	}
 
-	return activeSubscriptionStatuses.has(subscription.status);
+	return isSubscriptionCurrentlyActive(subscription);
 }
 
 export async function getUserPlan(userId: string) {
 	const subscription = await getUserSubscription(userId);
 
-	if (!subscription || !activeSubscriptionStatuses.has(subscription.status)) {
+	if (!isSubscriptionCurrentlyActive(subscription)) {
 		return getPlanByKey("free");
 	}
 
@@ -41,7 +40,7 @@ export async function getUserPlan(userId: string) {
 export async function requireActivePlan(userId: string) {
 	const subscription = await getUserSubscription(userId);
 
-	if (!subscription || !activeSubscriptionStatuses.has(subscription.status)) {
+	if (!isSubscriptionCurrentlyActive(subscription)) {
 		throw new Error("An active subscription is required.");
 	}
 

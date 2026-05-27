@@ -92,7 +92,32 @@ function toIsoString(value: Date | string | null | undefined) {
 		return null;
 	}
 
-	return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+	const date = value instanceof Date ? value : new Date(value);
+
+	return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+function parseJsonFallback(rawBody: string, fallback: DodoWebhookPayload) {
+	try {
+		return JSON.parse(rawBody) as unknown;
+	} catch {
+		return fallback as unknown;
+	}
+}
+
+function toHex(buffer: ArrayBuffer) {
+	return Array.from(new Uint8Array(buffer))
+		.map((byte) => byte.toString(16).padStart(2, "0"))
+		.join("");
+}
+
+export async function createDodoWebhookEventId(headerEventId: string | null, rawBody: string) {
+	if (headerEventId) {
+		return headerEventId;
+	}
+
+	const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(rawBody));
+	return `dodo:${toHex(digest)}`;
 }
 
 async function getUserIdFromPayload(data: DodoWebhookData | undefined) {
@@ -248,7 +273,7 @@ export async function processDodoWebhook(payload: DodoWebhookPayload, context: D
 			provider: "dodo",
 			eventId: context.eventId,
 			eventType,
-			rawJson: JSON.parse(context.rawBody) as unknown,
+			rawJson: parseJsonFallback(context.rawBody, payload),
 			createdAt: new Date().toISOString(),
 		});
 	} catch (error) {

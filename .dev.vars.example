@@ -2,7 +2,7 @@
 # Next.js `bun run dev` also reads `.env.local`, so keep local values in sync there.
 
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
-NEXT_PUBLIC_STACK_PROJECT_ID="stack_project_id"
+NEXT_PUBLIC_STACK_PROJECT_ID="00000000-0000-4000-8000-000000000000"
 NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY="stack_publishable_client_key"
 STACK_SECRET_SERVER_KEY="stack_secret_server_key"
 

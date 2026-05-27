@@ -27,5 +27,12 @@ export async function GET(request: NextRequest) {
 	const portalUrl = new URL(request.url);
 	portalUrl.searchParams.set("customer_id", customer.dodoCustomerId);
 
-	return handler(new Request(portalUrl, { method: "GET" }) as NextRequest);
+	const response = await handler(new Request(portalUrl, { method: "GET" }) as NextRequest);
+	const location = response.headers.get("location");
+
+	if (!location) {
+		return NextResponse.json({ error: "Unable to create a customer portal session." }, { status: 502 });
+	}
+
+	return NextResponse.json({ portalUrl: location });
 }
