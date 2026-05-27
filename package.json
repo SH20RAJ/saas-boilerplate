@@ -39,7 +39,7 @@
 		"format": "biome format --write .",
 		"format:check": "biome format .",
 		"typecheck": "tsc --noEmit",
-		"test": "vitest run --passWithNoTests",
+		"test": "vitest run",
 		"test:e2e": "playwright test",
 		"validate": "bun run format && bun run lint && bun run typecheck && bun run test",
 		"db:generate": "drizzle-kit generate --config=drizzle.config.ts",

@@ -21,7 +21,8 @@ deployment target without giving up the usual SaaS primitives.
 - Drizzle ORM with Cloudflare D1 by default
 - Tailwind CSS and shadcn/ui-style primitives
 - Biome formatting and linting
-- Vitest and Playwright test hooks
+- Vitest unit tests and Playwright E2E tests
+- GitHub Actions CI with safe placeholder build environment
 - Contributor docs and GitHub templates
 
 ## Quick Start
@@ -32,6 +33,7 @@ cd saas-boilerplate
 bun install
 cp .env.example .env.local
 cp .dev.vars.example .dev.vars
+bunx playwright install chromium
 bun run dev
 ```
 
@@ -71,6 +73,8 @@ See [environment variables](docs/environment-variables.md) for local and product
 | `bun run test` | Run Vitest |
 | `bun run test:e2e` | Run Playwright |
 | `bun run validate` | Run format, lint, typecheck, and unit tests |
+
+Run `bunx playwright install chromium` once before local E2E tests. CI installs the browser automatically.
 
 ## Project Structure
 

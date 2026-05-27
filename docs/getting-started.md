@@ -14,6 +14,7 @@
 bun install
 cp .env.example .env.local
 cp .dev.vars.example .dev.vars
+bunx playwright install chromium
 bun run dev
 ```
 
@@ -23,4 +24,5 @@ Use `.env.local` for Next.js local development and `.dev.vars` for Cloudflare ru
 
 ```bash
 bun run validate
+bun run test:e2e
 ```

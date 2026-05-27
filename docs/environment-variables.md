@@ -16,6 +16,9 @@ Cloudflare runtime preview.
 | `DODO_PAYMENTS_RETURN_URL` | Checkout return URL |
 | `DODO_PAYMENTS_ENVIRONMENT` | `test_mode` or `live_mode` |
 
+The placeholder Stack project ID in the example files is UUID-shaped so local builds and E2E tests can boot.
+Replace all Stack and Dodo placeholder values with real dashboard values before using auth or payments.
+
 ## Optional
 
 `POSTHOG_KEY`, `RESEND_API_KEY`, and `SENTRY_DSN` are reserved for common production integrations.
